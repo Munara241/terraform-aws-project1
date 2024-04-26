@@ -72,7 +72,7 @@ The module is structured as follows:
 ```hcl
 module "s3_hosting_website" {
   source = "Munara241/project1/aws"
-  version = "0.0.5"
+  version = "0.0.6"
   region = ""         # Provide the region 
   subdomain_name = "" # Provide the your subdomain 
   bucket_name = ""    # Provide the bucket name same as subdomain #123.example.com
