@@ -1,6 +1,6 @@
 # terraform {
 #   backend "s3" {
-#     bucket = "backend-s3project"                         
+#     bucket = "b<name of S3 bucket>"                         
 #     key    = "project1/terraform.tfstate"
 #     region = "us-east-1"
 #   }
