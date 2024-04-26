@@ -1,5 +1,5 @@
-provider aws {
-    region = var.region
+provider "aws" {
+  region = var.region
 }
 resource "aws_s3_bucket" "website_bucket" {
   bucket = var.bucket_name
@@ -43,29 +43,29 @@ resource "aws_s3_bucket_website_configuration" "example" {
 }
 
 resource "aws_s3_object" "index" {
-  depends_on = [aws_s3_bucket_acl.acl]
-  bucket = aws_s3_bucket.website_bucket.id       #not sure
-  key    = "index.html"
-  source = "index.html"
-  acl    = "public-read"
+  depends_on   = [aws_s3_bucket_acl.acl]
+  bucket       = aws_s3_bucket.website_bucket.id
+  key          = "index.html"
+  source       = "index.html"
+  acl          = "public-read"
   content_type = "text/html"
 }
 
 resource "aws_s3_object" "error" {
-  depends_on = [aws_s3_bucket_acl.acl]
-  bucket = aws_s3_bucket.website_bucket.id     
-  key    = "error.html"
-  source = "error.html"
-  acl    = "public-read"
+  depends_on   = [aws_s3_bucket_acl.acl]
+  bucket       = aws_s3_bucket.website_bucket.id
+  key          = "error.html"
+  source       = "error.html"
+  acl          = "public-read"
   content_type = "text/html"
 }
 
 resource "aws_route53_record" "web" {
-  zone_id = "Z0558387567WQ24W7LRY"    # Provide hosted zone ID
+  # Provide hosted zone ID
+  zone_id = "Z0558387567WQ24W7LRY"
   name    = var.bucket_name
   type    = "CNAME"
   ttl     = "300"
   records = ["${aws_s3_bucket.website_bucket.bucket}.s3-website.${var.region}.amazonaws.com"]
 }
-
 # bucket-name.s3-website.region.amazonaws.com (endpoint)
