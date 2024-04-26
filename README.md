@@ -12,18 +12,50 @@ member.
 
 
 
-## Statefile should be stored in a remote backend.
+# Statefile should be stored in a remote backend.
 First of all we have to create the S3 bucket in another region to store our state file.
-
-
+Use this code:
 ```hcl
-
-module "s3_hosting_website" {
-  source = "Munara241/project1/aws"
-  version = "0.0.3"
-  region = "us-east-2"
-  bucket_name = "hello.munara241.com"
-  subdomain_name = "hello.munara241.com"
-  zone_id = "Z0558387567WQ24W7LRY"
+provider "aws" {
+  region = "" # provide region
+}
+resource "aws_s3_bucket" "backendfile" {
+  bucket = "backend-statefile"
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+resource "aws_s3_bucket_versioning" "terraform_state" {
+    bucket = aws_s3_bucket.backendfile.id
+    versioning_configuration {
+      status = "Enabled"
+    }
 }
 ```
+After creating S3 backet you have to attach it to store your statefile.
+
+Use code:
+```hcl
+ terraform {
+   backend "s3" {
+     bucket = "backend-s3project"                         
+     key    = "project1/terraform.tfstate"
+     region = "us-east-1"
+   }
+ }
+ ```
+# Module Structure
+The module is structured as follows:
+
+```hcl
+module "s3_hosting_website" {
+  source = "Munara241/project1/aws"
+  version = "0.0.4"
+  region = "" # Provide the region
+  bucket_name = ""  # provide the bucket name like subdomain example.anything.com
+  subdomain_name = "" # provide the subdomain
+  zone_id = "" # provide you zone_id
+}
+```
+# Access the Website
+Once the deployment is complete, access the restaurant website by navigating to the specified subdomain in your web browser.
