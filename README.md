@@ -20,7 +20,7 @@ First of all we have to create the S3 bucket in another region to store our stat
 
 module "s3_hosting_website" {
   source = "Munara241/project1/aws"
-  version = "0.0.1"
+  version = "0.0.3"
   region = "us-east-2"
   bucket_name = "hello.munara241.com"
   subdomain_name = "hello.munara241.com"
