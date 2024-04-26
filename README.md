@@ -44,6 +44,8 @@ Use code:
  }
  ```
 # Module Structure
+Before deploying module structure need to create own index.html and error.html files.
+
 The module is structured as follows:
 
 ```hcl
@@ -56,5 +58,6 @@ module "s3_hosting_website" {
   zone_id = "" # provide you zone_id
 }
 ```
+
 # Access the Website
 Once the deployment is complete, access the restaurant website by navigating to the specified subdomain in your web browser.
