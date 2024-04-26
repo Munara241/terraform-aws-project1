@@ -62,7 +62,7 @@ resource "aws_s3_object" "error" {
 
 resource "aws_route53_record" "web" {
   # Provide hosted zone ID
-  zone_id = "Z0558387567WQ24W7LRY"
+  zone_id = var.zone_id
   name    = var.bucket_name
   type    = "CNAME"
   ttl     = "300"
